@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<title>TattaGuine</title>
+	<link rel="stylesheet" href="../../public/css/bootstrap.min.css"/>
+</h:head>
+<h:body>
+	<h1>Votre santé notre priorité</h1>
+	<div class="nav navbar navbar-default">
+		<ul class="nav navbar-nav">
+			<li>
+				<a href="../../accueil.jsf">Accueil</a>
+			</li>
+			<li>
+				<a href="view/medecin/liste.jsf">Medecin</a>
+			</li>
+			<li>
+				<a href="view/patient/liste.jsf">Patient</a>
+			</li>
+			<li>
+				<a href="liste.jsf">Fiche d'Observation</a>
+			</li>
+			<li>
+				<a href="view/paiement/liste.jsf">Paiement</a>
+			</li>
+			<li>
+				<a href="view/hospitalisation/liste.jsf">Hospitalisation</a>
+			</li> 
+			<li>
+				<a href="view/ordonance/liste.jsf">Ordonance</a>
+			</li>
+			<li>
+				<h:form>
+					<h:commandLink action="#{consultationBean.logOut()}">
+						<h:outputLabel style="color:red;font-size:20px;" value="Deconnexion"/>
+					</h:commandLink>
+				</h:form>
+			</li>
+		</ul>
+	</div>
+	
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading"> Liste des Consultations</div>
+			<div class="panel-body">
+			<h:form>
+				<h:dataTable value="#{consultationBean.findAll()}" var="consultation" class="table table-bordered table-striped">
+					<h:column id="id">
+						<f:facet name="header">
+							<h:outputText value="Identifiant"/>
+						</f:facet>
+							<h:outputText value="#{consultation.id}"/>
+					</h:column>
+					<h:column id="patient">
+						<f:facet name="header">
+							<h:outputText value="Patient"/>
+						</f:facet>
+							<h:outputText value="#{consultation.patient.nom}"/>
+					</h:column>
+					<h:column id="datejour">
+						<f:facet name="header">
+							<h:outputText value="Date "/></f:facet>
+							<h:outputText value="#{consultation.datejour}">
+							 <f:convertDateTime pattern="dd-MM-yyyy" />
+							 </h:outputText>
+					</h:column>
+					<h:column id="poids">
+						<f:facet name="header">
+							<h:outputText value="Poids"/>
+						</f:facet>
+							<h:outputText value="#{consultation.poids}"/>
+					</h:column>
+					<h:column id="taille">
+						<f:facet name="header">
+							<h:outputText value="Taille"/>
+						</f:facet>
+							<h:outputText value="#{consultation.taille}"/>
+					</h:column>
+					<h:column id="pouls">
+						<f:facet name="header">
+							<h:outputText value="Pouls"/>
+						</f:facet>
+							<h:outputText value="#{consultation.pouls}"/>
+					</h:column>
+					<h:column id="fre">
+						<f:facet name="header">
+							<h:outputText value="Frequence"/>
+						</f:facet>
+							<h:outputText value="#{consultation.fre}"/>
+					</h:column>
+					<h:column id="temp">
+						<f:facet name="header">
+							<h:outputText value="Temperature"/>
+						</f:facet>
+							<h:outputText value="#{consultation.temp}"/>
+					</h:column>
+					<h:column id="motif">
+						<f:facet name="header">
+							<h:outputText value="Motif"/>
+						</f:facet>
+							<h:outputText value="#{consultation.motif}"/>
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Action"/>
+						</f:facet>
+						<h:commandLink action="#{consultationBean.edit()}">
+							<h:outputText value="Editer"/>
+							<f:setPropertyActionListener value="#{consultation.id}" target="#{consultationBean.consultation.id}"></f:setPropertyActionListener>
+						</h:commandLink>
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Action"/>
+						</f:facet>
+						<h:commandLink action="#{consultationBean.remove()}">
+							<h:outputText value="Supprimer"/>
+							<f:setPropertyActionListener value="#{consultation.id}" target="#{consultationBean.consultation.id}"></f:setPropertyActionListener>
+						</h:commandLink>
+					</h:column>
+					
+				</h:dataTable>
+				</h:form>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container">
+		<div class="panel panel-primary">
+			<div class="panel-heading">Ajouter une consultation</div>
+			<div class="panel-body">
+				<h:form>
+					<div class="form-group">
+						<label> Patient</label>
+						
+						<h:selectOneMenu class="col-md-10 form-control" id="patient" value="#{consultationBean.consultation.patient.id}">
+							<f:selectItems value="#{consultationBean.getPatient()}" var="p" itemValue="#{p.id}" itemLabel="#{p.nom}"></f:selectItems>
+						</h:selectOneMenu>
+					</div>
+					
+					<div class="form-group">
+						<label> Date</label>
+						<h:inputText class="form-control" id="datejour" value="#{consultationBean.consultation.datejour}">
+							<f:convertDateTime pattern="dd-MM-yyyy"/>
+						</h:inputText>
+					</div>
+					<div class="form-group">
+						<label> Poids</label>
+						<h:inputText class="form-control" id="poids" value="#{consultationBean.consultation.poids}"/>
+					</div>
+					<div class="form-group">
+						<label> Taille</label>
+						<h:inputText class="form-control" id="taille" value="#{consultationBean.consultation.taille}"/>
+					</div>
+					<div class="form-group">
+						<label> Pouls</label>
+						<h:inputText class="form-control" id="pouls" value="#{consultationBean.consultation.pouls}"/>
+					</div>
+					<div class="form-group">
+						<label> Frequence</label>
+						<h:inputText class="form-control" id="fre" value="#{consultationBean.consultation.fre}"/>
+					</div>
+					<div class="form-group">
+						<label> Temperature</label>
+						<h:inputText class="form-control" id="temp" value="#{consultationBean.consultation.temp}"/>
+					</div>
+					<div class="form-group">
+						<label> Motif</label>
+						<h:inputText class="form-control" id="motif" value="#{consultationBean.consultation.motif}"/>
+					</div>
+					<div class="form-group">
+					
+						<h:commandButton class="btn btn-success"  value="Ajouter" action="#{consultationBean.save()}"/>
+						<h:commandButton class="btn btn-primary"  value="Modifier" action="#{consultationBean.update()}"/>
+						<h:commandButton class="btn btn-danger"  value="Annuler" action="#{consultationBean.reset()}"/>
+					</div>
+					
+				</h:form>
+			</div>
+			
+		</div>
+	</div>
+
+</h:body>
+</html>

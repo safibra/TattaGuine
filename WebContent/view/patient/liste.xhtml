@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<title>Patient</title>
+	<link rel="stylesheet" href="../../public/css/bootstrap.min.css"/>
+</h:head>
+<h:body>
+	<h1>Votre santé notre priorité</h1>
+	<div class="nav navbar navbar-default">
+		<ul class="nav navbar-nav">
+			<li>
+				<a href="../../accueil.jsf">Accueil</a>
+			</li>
+			<li>
+				<a href="view/medecin/liste.jsf">Medecin</a>
+			</li>
+			<li>
+				<a href="liste.jsf">Patient</a>
+			</li>
+			<li>
+				<a href="view/consultation/liste.jsf">Fiche d'observation</a>
+			</li>
+			<li>
+				<a href="view/paiement/liste.jsf">Paiement</a>
+			</li>
+			<li>
+				<a href="view/rdv/liste.jsf">Rendez-vous</a>
+			</li>
+			<li>
+				<a href="view/hospitalisation/liste.jsf">Hospitalisation</a>
+			</li>
+			<li>
+				<a href="view/ordonance/liste.jsf">Ordonance</a>
+			</li>
+			<li>
+				<h:form>
+					<h:commandLink action="#{patientbean.logOut()}">
+						<h:outputLabel style="color:red;font-size:20px;" value="Deconnexion"/>
+					</h:commandLink>
+				</h:form>
+			</li>
+		</ul>
+	</div>
+	
+		<div class="container col-md-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading"> Liste des Patients</div>
+			<div class="panel-body">
+			<h:form>
+				<h:dataTable  value="#{patientbean.findAll()}" var="patient" class="table table-bordered table-striped">
+					<h:column id="id">
+						<f:facet name="header">
+							<h:outputText value="Identifiant"/>
+						</f:facet>
+							<h:outputText value="#{patient.id}"/>
+					</h:column>
+					<h:column id="nom">
+						<f:facet name="header">
+							<h:outputText value="Nom"/>
+						</f:facet>
+							<h:outputText value="#{patient.nom}"/>
+					</h:column>
+					<h:column id="prenom">
+						<f:facet name="header">
+							<h:outputText value="prenom"/>
+						</f:facet>
+							<h:outputText value="#{patient.prenom}"/>
+					</h:column>
+					<h:column id="age">
+						<f:facet name="header">
+							<h:outputText value="Age"/>
+						</f:facet>
+							<h:outputText value="#{patient.age}"/>
+					</h:column>
+					<h:column id="adresse">
+						<f:facet name="header">
+							<h:outputText value="Adresse"/>
+						</f:facet>
+							<h:outputText value="#{patient.adresse}"/>
+					</h:column>
+					<h:column id="infirmier">
+						<f:facet name="header">
+							<h:outputText value="Infirmier"/>
+						</f:facet>
+							<h:outputText value="#{patient.infirmier.nom}"/>
+					</h:column>
+					<h:column id="medecin">
+						<f:facet name="header">
+							<h:outputText value="Medecin"/>
+						</f:facet>
+							<h:outputText value="#{patient.medecin.nom}"/>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Action"/>
+						</f:facet>
+						<h:commandLink action="#{patientbean.edit()}">
+							<h:outputText value="Editer"/>
+							<f:setPropertyActionListener value="#{patient.id}" target="#{patientbean.patient.id}"></f:setPropertyActionListener>
+						</h:commandLink>
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Action"/>
+						</f:facet>
+						<h:commandLink action="#{patientbean.remove()}">
+							<h:outputText value="Supprimer"/>
+							<f:setPropertyActionListener value="#{patient.id}" target="#{patientbean.patient.id}"></f:setPropertyActionListener>
+						</h:commandLink>
+					</h:column>
+					
+				</h:dataTable>
+				</h:form>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container col-md-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading">Ajout des Patients</div>
+			<div class="panel-body">
+				<h:form>
+					<div class="form-group">
+						<label> Nom</label>
+						<h:inputHidden class="form-control" id="id" value="#{patientbean.patient.id}"/>
+						<h:inputText class="form-control" id="nom" value="#{patientbean.patient.nom}"/>
+					</div>
+					<div class="form-group">
+						<label> Prenom</label>
+						<h:inputText class="form-control" id="prenom" value="#{patientbean.patient.prenom}"/>
+					</div>
+					<div class="form-group">
+						<label> Age</label>
+						<h:inputText class="form-control" id="age" value="#{patientbean.patient.age}"/>
+					</div>
+					<div class="form-group">
+						<label> Adresse</label>
+						<h:inputText class="form-control" id="adresse" value="#{patientbean.patient.adresse}"/>
+					</div>
+					<div class="form-group">
+						<label> Infirmier</label>
+						<!-- h:inputText class="form-control" id="infirmier" value="#{patientbean.patient.infirmier.id}"/> --> 
+					
+					<h:selectOneMenu class="col-md-10 form-control" id="infirmier" value="#{patientbean.patient.infirmier.id}">
+							<f:selectItems value="#{patientbean.getInfirmier()}" var="i" itemValue="#{i.id}" itemLabel="#{i.nom}"></f:selectItems>
+						</h:selectOneMenu>
+					</div>
+					
+					
+					<div class="form-group">
+						<label> Medecin</label>
+						<!-- h:inputText class="form-control" id="medecin" value="#{patientbean.patient.medecin.id}"/>  -->
+						<h:selectOneMenu class="col-md-10 form-control" id="medecin" value="#{patientbean.patient.medecin.id}">
+							<f:selectItems value="#{patientbean.getMedecin()}" var="m" itemValue="#{m.id}" itemLabel="#{m.nom}"></f:selectItems>
+						</h:selectOneMenu>
+					</div>
+					<div class="form-group">
+					
+						<h:commandButton class="btn btn-success"  value="Ajouter" action="#{patientbean.save}"/>
+						<h:commandButton class="btn btn-primary"  value="Modifier" action="#{patientbean.update()}"/>
+						<h:commandButton class="btn btn-danger"  value="Annuler" action="#{patientbean.reset()}"/>
+					</div>
+					
+				</h:form>
+			</div>
+			
+		</div>
+	</div>
+</h:body>
+</html>

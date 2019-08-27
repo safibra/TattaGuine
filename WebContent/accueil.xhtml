@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<title>TattaGuine</title>
+	<link rel="stylesheet" href="public/css/bootstrap.min.css"/>
+</h:head>
+<h:body>
+	<h1>Votre santé notre priorité</h1>
+	<div class="nav navbar navbar-default">
+		<ul class="nav navbar-nav">
+			<li>
+				<a href="accueil.jsf">Accueil</a>
+			</li>
+			<li>
+				<a href="view/medecin/liste.jsf">Medecin</a>
+			</li>
+			<li>
+				<a href="view/patient/liste.jsf">Patient</a>
+			</li>
+			<li>
+				<a href="view/consultation/liste.jsf">Carnet d'Observation</a>
+			</li>
+			<li>
+				<a href="view/paiement/liste.jsf">Paiement</a>
+			</li>
+			<li>
+				<a href="view/rdv/liste.jsf">Rendez-vous</a>
+			</li>
+			<li>
+				<a href="view/hospitalisation/liste.jsf">Hospitalisation</a>
+			</li>
+			<li>
+				<a href="view/ordonance/liste.jsf">Ordonance</a>
+			</li>
+			
+			<li>
+				<h:form>
+					<h:commandLink action="#{medecinbean.logOut()}">
+						<h:outputLabel style="color:red;font-size:20px;" value="Deconnexion"/>
+					</h:commandLink>
+				</h:form>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="panel-footer" align="center" style="color:blue;front-size:25px;"> Hafia HaSa by Safibra</div>
+	
+</h:body>
+</html>
